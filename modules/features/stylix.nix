@@ -102,7 +102,7 @@
     in {
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "kvantum";
-      QT_PLUGIN_PATH = "${homePath}/lib/qt-6/plugins:${homePath}/lib/qt-5.15.19/plugins\${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}";
+      # QT_PLUGIN_PATH = lib.mkForce "${homePath}/lib/qt-6/plugins:${homePath}/lib/qt-5.15.19/plugins\${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}";
       QML2_IMPORT_PATH = "${homePath}/lib/qt-6/qml:${homePath}/lib/qt-5.15.19/qml\${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}";
       XDG_DATA_DIRS = lib.mkForce "${homePath}/share\${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}";
     };

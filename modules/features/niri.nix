@@ -48,6 +48,12 @@
           border.width = 0;
         };
 
+        outputs = {
+          "DP-1" = {
+            mode = "2560x1440@164.847";
+          };
+        };
+
         binds = {
           "Mod+A" = _: {
             props.hotkey-overlay-title = "Toggle Vicinae (App Launcher)";
@@ -101,7 +107,8 @@
           "Mod+Shift+J".move-column-to-workspace-down = _: {};
           "Mod+F".maximize-column = _: {};
           "Mod+W".toggle-window-floating = _: {};
-          "Mod+Tab".switch-focus-between-floating-and-tiling = _: {};
+          "Mod+E".switch-focus-between-floating-and-tiling = _: {};
+          "Mod+Tab".focus-monitor-next = _: {};
         };
 
         window-rules = [

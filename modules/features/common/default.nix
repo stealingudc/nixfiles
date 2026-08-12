@@ -21,6 +21,9 @@
       kdiff3
 
       arc-icon-theme
+
+      xwayland-satellite
+      tidal-hifi
     ];
   };
 }

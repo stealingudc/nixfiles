@@ -4,6 +4,7 @@
       self.nixosModules.fish
     ];
     environment.systemPackages = with pkgs; [
+      direnv
       devenv
       keepassxc
       libreoffice

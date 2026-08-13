@@ -8,7 +8,32 @@
     imports = [
       inputs.nvf.nixosModules.default
     ];
-    programs.nvf = {
+    programs.nvf = let
+      haxe-lsp = pkgs.writeShellApplication {
+        name = "haxe-language-server";
+        runtimeInputs = [
+          pkgs.haxe
+          pkgs.nodejs
+        ];
+        text = ''
+          exec ${pkgs.nodejs}/bin/node \
+            ${./nvim/haxe/haxe-language-server.js} "$@"
+        '';
+      };
+      haxe-treesitter-grammar = pkgs.tree-sitter.buildGrammar {
+        language = "haxe";
+
+        version = "0.0.0+rev=master";
+        src = pkgs.fetchFromGitHub {
+          owner = "vantreeseba";
+          repo = "tree-sitter-haxe";
+          rev = "master";
+          hash = "sha256-+tsoHgCKSkQ3M2IUtxmbnmUo+jMZFGAMBBZoFv2PQzw=";
+        };
+
+        meta.homepage = "https://github.com/vantreeseba/tree-sitter-haxe";
+      };
+    in {
       enable = true;
       settings = {
         vim = {
@@ -164,12 +189,46 @@
           treesitter = {
             enable = true;
             highlight.enable = true;
+            # queries = [
+            #   ./nvim/haxe/_treesitter/folds.nix
+            #   ./nvim/haxe/_treesitter/highlights.nix
+            #   ./nvim/haxe/_treesitter/injections.nix
+            #   ./nvim/haxe/_treesitter/locals.nix
+            # ];
+
+            grammars = [
+              haxe-treesitter-grammar
+            ];
           };
+
+          luaConfigRC.haxe-treesitter = ''
+            vim.api.nvim_create_autocmd("FileType", {
+              pattern = "haxe",
+              callback = function(args)
+                vim.treesitter.start(args.buf, "haxe")
+              end,
+            })
+          '';
+
           lsp = {
             enable = true;
 
             lspconfig = {
               enable = true;
+            };
+
+            servers.haxe = {
+              cmd = lib.mkDefault ["${haxe-lsp}/bin/haxe-language-server"];
+              filetypes = ["haxe"];
+              root_markers = [".git"];
+
+              init_options.displayArguments = ["build.hxml"];
+
+              settings = {
+                haxe = {
+                  executable = "${pkgs.haxe}/bin/haxe";
+                };
+              };
             };
           };
 

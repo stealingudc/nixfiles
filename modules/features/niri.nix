@@ -21,6 +21,17 @@
         home.file."Pictures/Wallpapers".source = ./wallpapers;
       }
     );
+    config.xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        pkgs.xdg-desktop-portal-gnome
+      ];
+      config = {
+        common.default = ["gnome"];
+      };
+    };
   };
 
   perSystem = {

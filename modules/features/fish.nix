@@ -7,6 +7,7 @@
   }: {
     config.programs.fish = {
       interactiveShellInit = ''
+        ${pkgs.direnv}/bin/direnv hook fish | source
         set fish_greeting
       '';
 

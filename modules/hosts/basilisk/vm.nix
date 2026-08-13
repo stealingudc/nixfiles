@@ -24,6 +24,10 @@
       cores = 2;
       # diskSize = "auto";
       graphics = true;
+      qemu.options = [
+        "-device virtio-vga-gl"
+        "-display gtk,gl=on"
+      ];
     };
 
     hardware.graphics.enable = true;

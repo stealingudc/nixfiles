@@ -4,6 +4,7 @@
       self.nixosModules.fish
     ];
     environment.systemPackages = with pkgs; [
+      git
       direnv
       devenv
       keepassxc
